@@ -1,0 +1,36 @@
+* {
+  margin: 0;
+  padding: 0;
+}
+
+.layout {
+  background-color: yellow;
+  border: 3px solid 0;
+}
+.layout .logo {
+  display: flex;
+  flex-direction: column;
+}
+.layout .logo * {
+  align-self: center;
+}
+.layout .logo img {
+  height: 25vh;
+}
+.layout .logo h3 {
+  color: gray;
+  font-weight: normal;
+}
+
+.homepage {
+  background-color: blue;
+  min-height: 70vh;
+  display: flex;
+}
+.homepage .urlShortener {
+  margin: 5vw;
+  padding: 5vw;
+}
+.homepage .urlShortener input {
+  width: 60vw;
+}/*# sourceMappingURL=style.css.map */
