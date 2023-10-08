@@ -3,34 +3,191 @@
   padding: 0;
 }
 
-.layout {
-  background-color: yellow;
-  border: 3px solid 0;
-}
-.layout .logo {
-  display: flex;
-  flex-direction: column;
-}
-.layout .logo * {
-  align-self: center;
-}
-.layout .logo img {
-  height: 25vh;
-}
-.layout .logo h3 {
-  color: gray;
+h1, h2, h3, h4, h5, h6 {
   font-weight: normal;
 }
 
-.homepage {
-  background-color: blue;
-  min-height: 70vh;
+ul {
+  list-style-type: none;
+}
+
+a {
+  text-decoration: none;
+  color: black;
+}
+
+body .layout {
+  font-family: "Gill Sans", sans-serif;
+  display: flex;
+  flex-direction: column;
+}
+body .layout nav {
+  padding: 1rem;
+  flex: 2 1 10vh;
+}
+body .layout main {
+  flex: 8 1 85vh;
+}
+body .layout .footer {
+  flex: 1 1 5vh;
+}
+
+nav {
+  display: flex;
+  position: sticky;
+  top: 0;
+  z-index: 10;
+  box-shadow: 0 10px 6px -6px #777;
+  background-color: rgb(255, 250, 205);
+}
+nav .left {
+  flex: 4 1 400px;
+  display: flex;
+  align-items: center;
+}
+nav .left img {
+  width: 20vw;
+}
+nav .left img:hover {
+  margin: 0.3rem;
+}
+nav .left h1 {
+  font-size: 2rem;
+}
+nav .right {
+  flex: 8 1 600px;
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+}
+nav .right ul {
   display: flex;
 }
-.homepage .urlShortener {
-  margin: 5vw;
-  padding: 5vw;
+nav .right ul li {
+  padding: 0.5rem 1rem;
 }
-.homepage .urlShortener input {
-  width: 60vw;
+nav .right ul li a {
+  font-size: 2rem;
+}
+nav .right ul li a:hover {
+  color: rgb(31, 72, 136);
+  border-bottom: 3px solid rgb(31, 72, 136);
+}
+
+main .homepage {
+  display: flex;
+  flex-direction: column;
+  text-align: center;
+}
+main .homepage .urlShortenerContainer {
+  min-height: 500px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin: 1rem;
+}
+main .homepage .urlShortenerContainer h2 {
+  flex: 2 1 50px;
+  padding: 1.5rem;
+  font-size: 3.5rem;
+  color: rgb(31, 72, 136);
+}
+main .homepage .urlShortenerContainer p {
+  flex: 2 1 50px;
+  font-size: 2rem;
+}
+main .homepage .urlShortenerContainer .advertisement {
+  flex: 0.5 1 20px;
+  margin: 1rem;
+}
+main .homepage .urlShortenerContainer .advertisement .ad img {
+  width: 50%;
+}
+main .homepage .urlShortenerContainer .urlShortener {
+  flex: 4 1 150px;
+  width: 70vw;
+  margin: 2.5rem 1rem 0rem 1rem;
+  font-size: 1.5rem;
+}
+main .homepage .urlShortenerContainer .urlShortener input {
+  height: 30%;
+  width: 80%;
+  border-top-left-radius: 0.3rem;
+  border-bottom-left-radius: 0.3rem;
+}
+main .homepage .urlShortenerContainer .urlShortener button {
+  background-color: rgb(31, 72, 136);
+  color: white;
+  height: 30%;
+  width: 20%;
+  border-top-right-radius: 0.3rem;
+  border-bottom-right-radius: 0.3rem;
+}
+main .homepage .features {
+  min-height: 400px;
+  background-color: rgb(31, 72, 136);
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+}
+main .homepage .features .feature {
+  flex: 1 1 300px;
+  min-height: 400px;
+  padding: 2rem;
+  margin: 3rem;
+  color: white;
+  width: 20vw;
+  height: 20vw;
+}
+main .homepage .features .feature h3 {
+  font-size: 2rem;
+  padding: 1rem;
+}
+main .homepage .features .feature p {
+  font-size: 1.25rem;
+}
+main .homepage .premium {
+  min-height: 600px;
+  padding: 2rem;
+}
+main .homepage .premium h3 {
+  font-size: 2.5rem;
+  border-radius: 0.3rem;
+  color: rgb(31, 72, 136);
+}
+main .homepage .premium .plans {
+  display: flex;
+  flex-wrap: wrap;
+}
+main .homepage .premium .plans .plan {
+  flex: 1 1 300px;
+  min-height: 450px;
+  margin: 0.5rem;
+  padding: 2rem;
+  border: 3px solid rgb(31, 72, 136);
+  border-radius: 0.3rem;
+}
+main .homepage .premium .plans .plan h4 {
+  font-size: 2rem;
+  color: white;
+  padding: 0.5rem;
+  background-color: rgb(31, 72, 136);
+}
+main .homepage .premium .plans .plan .pTag {
+  padding: 0.5rem;
+}
+main .homepage .premium .plans .plan .pTag p {
+  text-align: left;
+}
+
+.footer {
+  background-color: rgb(255, 250, 205);
+  box-shadow: 0 -5px 5px -5px #777;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0.5rem;
+}
+.footer h3 {
+  font-size: 1.25rem;
 }/*# sourceMappingURL=style.css.map */

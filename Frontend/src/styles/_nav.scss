@@ -1,0 +1,44 @@
+nav {
+    display: flex;
+    position: sticky;
+    top: 0;
+    z-index: 10;
+    box-shadow: 0 10px 6px -6px #777;
+    background-color: rgb(255,250,205);
+    .left {
+        flex: 4 1 400px;
+        display: flex;
+        align-items: center;
+        img {
+            width: 20vw;
+            &:hover {
+                margin: 0.3rem;
+            }
+        }
+        h1 {
+            font-size: 2rem;
+        }
+    }
+
+    .right {
+        flex: 8 1 600px;
+        display: flex;
+        align-items: center;
+        justify-content: flex-end;
+        ul {
+            display: flex;
+            li {
+                padding: 0.5rem 1rem;
+                a {
+                    font-size: 2rem;
+                    &:hover {
+                        color: $themeColor;
+                        border-bottom: 3px solid $themeColor;
+                    }
+                }
+            }
+        }
+    }
+
+    
+}

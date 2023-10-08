@@ -3,7 +3,7 @@ import React from 'react'
 const page404 = () => {
   return (
     <div>
-        <h2> 404: Unknown short URL</h2>
+        <h2> 404: Page not found</h2>
     </div>
   )
 }

@@ -1,39 +1,44 @@
+$themeColor: rgb(31, 72, 136);
+
 * {
     margin: 0;
     padding: 0;
-}
-.layout {
-    background-color: yellow;
-    border: 3px solid blue($color: #000000);
-    .logo {
-        // flex: 1 1 1000px;
-        display: flex;
-        flex-direction: column;
-        * {
-            align-self: center;
-        }
-        img {
-            // width: 4vw;
-            height: 25vh;
-            
-        }
-        h3 {
-            color: gray;
-            font-weight: normal;
-        }
-    }
     
 }
 
-.homepage {
-    background-color: blue;
-    min-height: 70vh;
-    display: flex;
-    .urlShortener {
-        margin: 5vw;
-        padding: 5vw;
-        input {
-            width: 60vw;
-        }
-    }
+h1, h2, h3, h4, h5, h6 {
+    font-weight: normal;
 }
+
+ul {
+    list-style-type: none;
+}
+
+a {
+    text-decoration: none;
+    color: black;
+}
+
+body .layout {
+    font-family: "Gill Sans", sans-serif;
+    display: flex;
+    flex-direction: column;
+    nav {
+        padding: 1rem;
+        flex: 2 1 10vh;
+    }
+
+    main {
+        flex: 8 1 85vh;
+    }
+
+    .footer {
+        flex: 1 1 5vh;
+    }
+
+}
+
+
+@import "./nav";
+@import "./main";
+@import "./footer";
