@@ -1,11 +1,13 @@
 import React from 'react';
-import {Outlet, Link} from "react-router-dom";
-
+import {Outlet, Link, useLocation} from "react-router-dom";
+import { useGlobalContext } from "./context/GlobalContext";
 import Footer from './main/components/Footer';
 import logo from './images/LinkPulseLogo.png';
 
 
 function Layout() {
+    const {pathname} = useLocation();
+    const {user, Logout} = useGlobalContext();
   return (
       <div className="layout">
           <nav>
@@ -16,17 +18,32 @@ function Layout() {
                   <h1>URL Shortener</h1>
               </div>
               <div className="right">
-                  <ul>
-                      <li>
-                          <Link to="/premium">Premium</Link>
-                      </li>
-                      <li>
-                          <Link to="/login">Login</Link>
-                      </li>
-                      <li>
-                          <Link to="/singup">SignUp</Link>
-                      </li>
-                  </ul>
+                <ul>
+                    <li>
+                        <Link to="/premium">Premium</Link>
+                    </li>
+                    {user ? (
+                        <>
+                            <li>
+                                <h4>Hello {user.name}!</h4>
+                            </li>
+                            <li>
+                                <button className="btn" onClick={Logout}>Logout</button>
+                            </li>
+                        </>
+                    ) : (
+                        pathname === "/" ? (
+                            <li>
+                                <Link to="/register"> Register </Link>
+                            </li>
+
+                        ) : (
+                            <li>
+                                <Link to="/login" > Login </Link>
+                            </li>
+                        )
+                    )}
+                </ul>
               </div>
           </nav>
 
