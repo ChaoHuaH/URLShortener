@@ -1,7 +1,7 @@
 package com.comp539.shorturl.service;
 
 import com.comp539.shorturl.gateway.BigTableGateway;
-import com.comp539.shorturl.utils.ShortURLGenerationUtil;
+import com.comp539.shorturl.utils.HashingUtil;
 import com.google.cloud.bigtable.data.v2.models.Row;
 import com.google.cloud.bigtable.data.v2.models.RowCell;
 import org.springframework.stereotype.Service;
@@ -12,14 +12,14 @@ import java.util.List;
 public class URLConversionService {
 
     private BigTableGateway bigTableGateway;
-    private ShortURLGenerationUtil shortURLGenerationUtil;
+    private HashingUtil hashingUtil;
     private static final String URL_TABLE = "urlmap1";
     private static final String FAMILIY_NAME = "longUrl";
     private static final String COLUMN_NAME = "longUrl";
 
-    URLConversionService(BigTableGateway bigTableGateway, ShortURLGenerationUtil shortURLGenerationUtil){
+    URLConversionService(BigTableGateway bigTableGateway, HashingUtil hashingUtil){
         this.bigTableGateway = bigTableGateway;
-        this.shortURLGenerationUtil = shortURLGenerationUtil;
+        this.hashingUtil = hashingUtil;
     }
 
     public String toLongUrl(String shortUrl){
@@ -30,7 +30,7 @@ public class URLConversionService {
     }
 
     public String toShortUrl(String longUrl){
-        String shortUrl = shortURLGenerationUtil.generteShortUrl(longUrl);
+        String shortUrl = hashingUtil.generateBase62Hash(longUrl);
         bigTableGateway.writeRow(URL_TABLE, FAMILIY_NAME, COLUMN_NAME, shortUrl, longUrl);
         return shortUrl;
     }

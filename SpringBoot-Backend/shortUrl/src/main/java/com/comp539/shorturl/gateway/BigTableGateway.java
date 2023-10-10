@@ -3,12 +3,15 @@ package com.comp539.shorturl.gateway;
 import com.google.api.gax.rpc.NotFoundException;
 import com.google.cloud.bigtable.data.v2.BigtableDataClient;
 import com.google.cloud.bigtable.data.v2.BigtableDataSettings;
+import com.google.cloud.bigtable.data.v2.models.Filters;
 import com.google.cloud.bigtable.data.v2.models.Row;
 import com.google.cloud.bigtable.data.v2.models.RowCell;
 import com.google.cloud.bigtable.data.v2.models.RowMutation;
 import org.springframework.stereotype.Component;
 
 import java.io.IOException;
+
+import static com.google.cloud.bigtable.data.v2.models.Filters.FILTERS;
 
 @Component
 public class BigTableGateway {
@@ -37,4 +40,6 @@ public class BigTableGateway {
         RowMutation rowMutation = RowMutation.create(tableId, rowKey).setCell(columnFamily, qualifier, value);
         dataClient.mutateRow(rowMutation);
     }
+
+
 }
