@@ -1,12 +1,8 @@
 package com.comp539.shorturl.gateway;
 
-import com.google.api.gax.rpc.NotFoundException;
 import com.google.cloud.bigtable.data.v2.BigtableDataClient;
 import com.google.cloud.bigtable.data.v2.BigtableDataSettings;
-import com.google.cloud.bigtable.data.v2.models.Filters;
-import com.google.cloud.bigtable.data.v2.models.Row;
-import com.google.cloud.bigtable.data.v2.models.RowCell;
-import com.google.cloud.bigtable.data.v2.models.RowMutation;
+import com.google.cloud.bigtable.data.v2.models.*;
 import org.springframework.stereotype.Component;
 
 import java.io.IOException;
@@ -41,5 +37,11 @@ public class BigTableGateway {
         dataClient.mutateRow(rowMutation);
     }
 
+    public boolean mutateWhenNotExist(String tableId, String rowKey, Mutation mutation){
+        Filters.Filter filter = FILTERS.key().regex(rowKey);
+        ConditionalRowMutation conditionalRowMutation = ConditionalRowMutation.create(tableId, rowKey).condition(filter).otherwise(mutation);
+        boolean success = dataClient.checkAndMutateRow(conditionalRowMutation);
+        return success;
+    }
 
 }

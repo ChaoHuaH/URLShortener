@@ -2,6 +2,7 @@ package com.comp539.shorturl.service;
 
 import com.comp539.shorturl.gateway.BigTableGateway;
 import com.comp539.shorturl.utils.HashingUtil;
+import com.google.cloud.bigtable.data.v2.models.Mutation;
 import com.google.cloud.bigtable.data.v2.models.Row;
 import com.google.cloud.bigtable.data.v2.models.RowCell;
 import org.springframework.stereotype.Service;
@@ -31,7 +32,24 @@ public class URLConversionService {
 
     public String toShortUrl(String longUrl){
         String shortUrl = hashingUtil.generateBase62Hash(longUrl);
-        bigTableGateway.writeRow(URL_TABLE, FAMILIY_NAME, COLUMN_NAME, shortUrl, longUrl);
+        insertUrlMapWithRetries(shortUrl, longUrl, 3);
         return shortUrl;
     }
+
+    private boolean insertUrlMap(String shortUrl, String longUrl){
+        Mutation mutation = Mutation.create().setCell(FAMILIY_NAME, COLUMN_NAME, longUrl);
+        boolean notExist = bigTableGateway.mutateWhenNotExist(URL_TABLE, shortUrl, mutation);
+        return notExist;
+    }
+
+    private boolean insertUrlMapWithRetries(String shortUrl, String longUrl, int numOfRetries){
+        for(int i = 0; i < numOfRetries; i++){
+            boolean notExist = insertUrlMap(shortUrl, longUrl);
+            if(!notExist){
+                break;
+            }
+        }
+        return false;
+    }
+
 }
