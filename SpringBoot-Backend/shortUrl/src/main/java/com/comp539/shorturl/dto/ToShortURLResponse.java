@@ -5,11 +5,9 @@ public class ToShortURLResponse {
     public ToShortURLResponse(String shortenedURL) {
         this.shortenedURL = shortenedURL;
     }
-
     public String getShortenedURL() {
         return shortenedURL;
     }
-
     public void setShortenedURL(String shortenedURL) {
         this.shortenedURL = shortenedURL;
     }
