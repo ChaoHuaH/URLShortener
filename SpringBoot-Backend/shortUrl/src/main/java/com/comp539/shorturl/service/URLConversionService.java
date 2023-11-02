@@ -1,37 +1,34 @@
 package com.comp539.shorturl.service;
 
-import com.comp539.shorturl.gateway.BigTableGateway;
-import com.comp539.shorturl.utils.ShortURLGenerationUtil;
-import com.google.cloud.bigtable.data.v2.models.Row;
-import com.google.cloud.bigtable.data.v2.models.RowCell;
+import com.comp539.shorturl.gateway.URLMapGateway;
+import com.comp539.shorturl.utils.HashingUtil;
+import com.comp539.shorturl.utils.URLDecodingUtil;
 import org.springframework.stereotype.Service;
-
-import java.util.List;
 
 @Service
 public class URLConversionService {
 
-    private BigTableGateway bigTableGateway;
-    private ShortURLGenerationUtil shortURLGenerationUtil;
-    private static final String URL_TABLE = "urlmap1";
-    private static final String FAMILIY_NAME = "longUrl";
-    private static final String COLUMN_NAME = "longUrl";
+    private URLMapGateway urlMapGateway;
+    private HashingUtil hashingUtil;
+    private URLDecodingUtil urlDecodingUtil;
 
-    URLConversionService(BigTableGateway bigTableGateway, ShortURLGenerationUtil shortURLGenerationUtil){
-        this.bigTableGateway = bigTableGateway;
-        this.shortURLGenerationUtil = shortURLGenerationUtil;
+    URLConversionService(URLMapGateway urlMapGateway, HashingUtil hashingUtil, URLDecodingUtil urlDecodingUtil){
+        this.urlMapGateway = urlMapGateway;
+        this.hashingUtil = hashingUtil;
+        this.urlDecodingUtil = urlDecodingUtil;
     }
 
     public String toLongUrl(String shortUrl){
-        Row longUrlRow = bigTableGateway.readRow(URL_TABLE, shortUrl);
-        List<RowCell> cells = longUrlRow.getCells(FAMILIY_NAME, COLUMN_NAME);
-        String longUrl = cells.get(0).getValue().toStringUtf8();
-        return longUrl;
+        return urlMapGateway.getLongUrl(shortUrl);
     }
 
     public String toShortUrl(String longUrl){
-        String shortUrl = shortURLGenerationUtil.generteShortUrl(longUrl);
-        bigTableGateway.writeRow(URL_TABLE, FAMILIY_NAME, COLUMN_NAME, shortUrl, longUrl);
+        String shortUrl = hashingUtil.generateBase62Hash(longUrl).substring(0,6);
+        String decodedLongUrl = urlDecodingUtil.decodeUrl(longUrl);
+        urlMapGateway.insertUrlMapWithRetries(shortUrl, decodedLongUrl, 3);
         return shortUrl;
     }
+
+
+
 }
