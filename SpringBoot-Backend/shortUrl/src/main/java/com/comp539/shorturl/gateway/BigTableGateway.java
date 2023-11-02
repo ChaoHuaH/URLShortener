@@ -12,8 +12,8 @@ import static com.google.cloud.bigtable.data.v2.models.Filters.FILTERS;
 @Component
 public class BigTableGateway {
 
-    private final static String PROJECT_ID = "analog-pilot-401519";
-    private final static String INSTANCE_ID = "shortenurl1";
+    private final static String PROJECT_ID = "rice-comp-539-spring-2022";
+    private final static String INSTANCE_ID = "rice-shared";
     private static BigtableDataSettings settings;
     private static BigtableDataClient dataClient;
 

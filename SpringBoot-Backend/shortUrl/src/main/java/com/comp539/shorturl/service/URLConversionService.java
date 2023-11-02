@@ -2,6 +2,7 @@ package com.comp539.shorturl.service;
 
 import com.comp539.shorturl.gateway.BigTableGateway;
 import com.comp539.shorturl.utils.HashingUtil;
+import com.comp539.shorturl.utils.URLDecodingUtil;
 import com.google.cloud.bigtable.data.v2.models.Mutation;
 import com.google.cloud.bigtable.data.v2.models.Row;
 import com.google.cloud.bigtable.data.v2.models.RowCell;
@@ -14,13 +15,15 @@ public class URLConversionService {
 
     private BigTableGateway bigTableGateway;
     private HashingUtil hashingUtil;
-    private static final String URL_TABLE = "urlmap1";
+    private static final String URL_TABLE = "team3_URLMap";
     private static final String FAMILIY_NAME = "longUrl";
     private static final String COLUMN_NAME = "longUrl";
+    private URLDecodingUtil urlDecodingUtil;
 
-    URLConversionService(BigTableGateway bigTableGateway, HashingUtil hashingUtil){
+    URLConversionService(BigTableGateway bigTableGateway, HashingUtil hashingUtil, URLDecodingUtil urlDecodingUtil){
         this.bigTableGateway = bigTableGateway;
         this.hashingUtil = hashingUtil;
+        this.urlDecodingUtil = urlDecodingUtil;
     }
 
     public String toLongUrl(String shortUrl){
@@ -31,8 +34,9 @@ public class URLConversionService {
     }
 
     public String toShortUrl(String longUrl){
-        String shortUrl = hashingUtil.generateBase62Hash(longUrl);
-        insertUrlMapWithRetries(shortUrl, longUrl, 3);
+        String shortUrl = hashingUtil.generateBase62Hash(longUrl).substring(0,6);
+        String decodedLongUrl = urlDecodingUtil.decodeUrl(longUrl);
+        insertUrlMapWithRetries(shortUrl, decodedLongUrl, 3);
         return shortUrl;
     }
 
