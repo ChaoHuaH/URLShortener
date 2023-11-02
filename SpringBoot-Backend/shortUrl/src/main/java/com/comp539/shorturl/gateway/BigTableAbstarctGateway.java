@@ -9,8 +9,7 @@ import java.io.IOException;
 
 import static com.google.cloud.bigtable.data.v2.models.Filters.FILTERS;
 
-@Component
-public class BigTableGateway {
+public abstract class BigTableAbstarctGateway {
 
     private final static String PROJECT_ID = "rice-comp-539-spring-2022";
     private final static String INSTANCE_ID = "rice-shared";
