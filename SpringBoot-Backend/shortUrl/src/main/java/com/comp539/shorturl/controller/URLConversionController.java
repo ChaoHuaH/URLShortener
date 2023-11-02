@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.view.RedirectView;
 
 @RestController
+@RequestMapping(value = {""})
 public class URLConversionController {
 
     private URLConversionService urlConversionService;
