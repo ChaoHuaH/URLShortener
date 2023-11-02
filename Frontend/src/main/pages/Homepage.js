@@ -1,11 +1,24 @@
-import React from "react";
+import {React, useState} from "react";
 import { Link } from "react-router-dom";
 import ad_adobe from "../../images/adobe.png";
 import { IconContext } from "react-icons";
-import { FaBeer, FaTruck, FaRegSmile, FaRegFrown } from "react-icons/fa";
+import { FaBeer, FaTruck, FaRegSmile, FaRegFrown, FaRegCopy, FaEdit } from "react-icons/fa";
 import { TfiStatsUp } from "react-icons/tfi";
 
 const Homepage = () => {
+    let [shortURL, setShortURL] = useState("yourShortUrl.com");
+    let [longURL, setLongURL] = useState("");
+    const handleShortenClick = () => {
+        console.log("Shorten the URL");
+        setShortURL("www.linkpulseddfd.com")
+        setLongURL("www.linkpulseLongssssssss.com")
+    }
+
+    const handleCopyClick = async () => {
+        await navigator.clipboard.writeText(shortURL);
+        console.log("COPY!!!!!!");
+    }
+
     return (
         <div className="homepage">
             <div className="urlShortenerContainer">
@@ -26,10 +39,42 @@ const Homepage = () => {
                         id="longURL"
                         type="text"
                         name="longURL"
-                        placeholder=" Enter a link here"
+                        placeholder="Enter a link here"
+                        // onChange={}
                     />
-                    <button>Shorten</button>
+                    <button id="shorten" onClick={handleShortenClick}>
+                        Shorten
+                    </button>
                 </form>
+
+                <div className="shortenResult">
+                    <div className="up">
+                        <div className="left">
+                            <a href={shortURL}>{shortURL}</a>
+                            &nbsp;&nbsp;
+                            
+                        </div>
+                        <div className="right">
+                            <button onClick={handleCopyClick}>
+                                &nbsp;<FaRegCopy className="icon" /> Copy&nbsp;
+                            </button>
+                            <button>
+                                &nbsp;<FaEdit className="icon" /> Edit&nbsp;
+                            </button>
+                            <button>
+                                &nbsp;<TfiStatsUp className="icon" /> Stats&nbsp;
+                            </button>
+                        
+                        </div>
+                    </div>
+                    <div className="down">
+                        <p>
+                            Long URL: &nbsp;<a href={longURL}>{longURL}</a>
+                        </p>
+                    </div>
+                </div>
+
+                <button onClick={handleShortenClick}>add</button>
             </div>
 
             <div className="features">
