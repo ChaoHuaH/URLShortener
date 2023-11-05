@@ -1,4 +1,4 @@
-import {React, useState} from "react";
+import {React, useState, useEffect} from "react";
 import { Link } from "react-router-dom";
 import ad_adobe from "../../images/adobe.png";
 import { IconContext } from "react-icons";
@@ -6,16 +6,55 @@ import { FaBeer, FaTruck, FaRegSmile, FaRegFrown, FaRegCopy, FaEdit } from "reac
 import { TfiStatsUp } from "react-icons/tfi";
 
 const Homepage = () => {
-    let [shortURL, setShortURL] = useState("yourShortUrl.com");
+    let dummyData = {"shortenedURL":"3Wb4QA"};
+
+    let [shortURL, setShortURL] = useState("");
+    let [tempLongURL, setTempLongURL] = useState("");
     let [longURL, setLongURL] = useState("");
+    const handleOnChange = (e) => {
+        let inputValue = e.target.value;
+        setTempLongURL(inputValue)
+        console.log("======== on change")
+        console.log(tempLongURL, '::', longURL)
+        console.log("--------")
+    }
+
+    useEffect(() => {
+        if (longURL) {
+          // Fetch data from the specified URL using longURL state
+        //   fetch(`http://localhost:8080/to-shortURL?longURL=${longURL}`, {
+        //     mode: "no-cors",
+        //     method: "get"
+        //   })
+        //     .then(response => {
+        //         console.log(response)
+        //         response.json()
+        //     })
+        //     .then(data => {
+        //         console.log(data)
+        //     })
+        //     .catch(error => {
+        //       console.error("Error fetching data:", error);
+        //     });
+            console.log("in useFffect", "longURL: ", longURL);
+        }
+      }, [longURL]); // useEffect will run whenever longURL state changes
+
+
+
     const handleShortenClick = () => {
-        console.log("Shorten the URL");
-        setShortURL("www.linkpulseddfd.com")
-        setLongURL("www.linkpulseLongssssssss.com")
+        console.log("====== Shorten the URL");
+        // fetchShortenedURL();
+        setLongURL(tempLongURL);
+        
+        setShortURL(dummyData.shortenedURL);
+        console.log(">> shortenURL ", shortURL);
+        
+        setTempLongURL("");
     }
 
     const handleCopyClick = async () => {
-        await navigator.clipboard.writeText(shortURL);
+        await navigator.clipboard.writeText(`http://localhost:8080/rl/${shortURL}`);
         console.log("COPY!!!!!!");
     }
 
@@ -34,18 +73,16 @@ const Homepage = () => {
                         </Link>
                     </div>
                 </div>
-                <form action="" className="urlShortener">
+                <div className="urlShortener">
                     <input
-                        id="longURL"
+                        id="longURLInput"
                         type="text"
-                        name="longURL"
                         placeholder="Enter a link here"
-                        // onChange={}
+                        onChange={handleOnChange}
+                        value={tempLongURL}
                     />
-                    <button id="shorten" onClick={handleShortenClick}>
-                        Shorten
-                    </button>
-                </form>
+                    <button id="shorten" onClick={handleShortenClick}>Shorten</button>
+                </div>
 
                 <div className="shortenResult">
                     <div className="up">
@@ -74,7 +111,7 @@ const Homepage = () => {
                     </div>
                 </div>
 
-                <button onClick={handleShortenClick}>add</button>
+                {/* <button onClick={handleShortenClick}>add</button> */}
             </div>
 
             <div className="features">
