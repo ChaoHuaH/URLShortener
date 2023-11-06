@@ -29,6 +29,15 @@ public class URLConversionService {
         return shortUrl;
     }
 
-
+    public boolean createCustomShortUrl(String longUrl, String alias){
+        if(urlMapGateway.existShortUrl(alias)){
+            return false;
+        }
+        else{
+            String decodedLongUrl = urlDecodingUtil.decodeUrl(longUrl);
+            urlMapGateway.insertUrlMapWithRetries(alias, decodedLongUrl, 3);
+            return true;
+        }
+    }
 
 }

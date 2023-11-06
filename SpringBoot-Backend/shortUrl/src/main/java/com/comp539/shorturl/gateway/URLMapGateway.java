@@ -35,4 +35,9 @@ public class URLMapGateway extends BigTableAbstarctGateway {
         }
         return false;
     }
+
+    public boolean existShortUrl(String shortUrl){
+        Row result = readRow(URL_TABLE, shortUrl);
+        return result != null && !result.getCells().isEmpty();
+    }
 }
