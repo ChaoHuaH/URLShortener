@@ -52,6 +52,7 @@ main {
             }
 
             .shortenResult {
+                visibility: hidden;
                 border: 2px solid $themeColor;
                 border-top-left-radius: 0.3rem;
                 border-bottom-left-radius: 0.3rem;
@@ -72,6 +73,9 @@ main {
                     margin: 1rem;
                     .left {
                         margin: 0.5rem;
+                        a {
+                            color: blue;
+                        }
                     }
                     .right {
                         margin: 0.8rem;
@@ -92,6 +96,13 @@ main {
                         font-size: 1.5rem;
                         text-align: left;
                         margin: 0.5rem;
+                        word-wrap: break-word;
+                        a {
+                            color: lightslategray;
+                            &:hover {
+                                color: blue;
+                            }
+                        }
                     }
                 }
                 

@@ -136,6 +136,7 @@ main .homepage .urlShortenerContainer .urlShortener button {
   border-bottom-right-radius: 0.3rem;
 }
 main .homepage .urlShortenerContainer .shortenResult {
+  visibility: hidden;
   border: 2px solid rgb(31, 72, 136);
   border-top-left-radius: 0.3rem;
   border-bottom-left-radius: 0.3rem;
@@ -158,6 +159,9 @@ main .homepage .urlShortenerContainer .shortenResult .up {
 main .homepage .urlShortenerContainer .shortenResult .up .left {
   margin: 0.5rem;
 }
+main .homepage .urlShortenerContainer .shortenResult .up .left a {
+  color: blue;
+}
 main .homepage .urlShortenerContainer .shortenResult .up .right {
   margin: 0.8rem;
 }
@@ -177,6 +181,13 @@ main .homepage .urlShortenerContainer .shortenResult .down p {
   font-size: 1.5rem;
   text-align: left;
   margin: 0.5rem;
+  word-wrap: break-word;
+}
+main .homepage .urlShortenerContainer .shortenResult .down p a {
+  color: lightslategray;
+}
+main .homepage .urlShortenerContainer .shortenResult .down p a:hover {
+  color: blue;
 }
 main .homepage .features {
   min-height: 400px;

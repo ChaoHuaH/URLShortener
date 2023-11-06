@@ -6,7 +6,6 @@ import { FaBeer, FaTruck, FaRegSmile, FaRegFrown, FaRegCopy, FaEdit } from "reac
 import { TfiStatsUp } from "react-icons/tfi";
 
 const Homepage = () => {
-    let dummyData = {"shortenedURL":"3Wb4QA"};
 
     let [shortURL, setShortURL] = useState("");
     let [tempLongURL, setTempLongURL] = useState("");
@@ -14,9 +13,6 @@ const Homepage = () => {
     const handleOnChange = (e) => {
         let inputValue = e.target.value;
         setTempLongURL(inputValue)
-        console.log("======== on change")
-        console.log(tempLongURL, '::', longURL)
-        console.log("--------")
     }
 
     useEffect(() => {
@@ -26,35 +22,28 @@ const Homepage = () => {
              method: "get"
            })
              .then(response => {
-                 console.log(response)
                  return response.json()
              })
              .then(data => {
-                 console.log(data)
+                 setShortURL(data.shortenedURL);
              })
              .catch(error => {
                console.error("Error fetching data:", error);
              });
-            console.log("in useFffect", "longURL: ", longURL);
         }
-      }, [longURL]); // useEffect will run whenever longURL state changes
+      }, [longURL]);
 
 
 
     const handleShortenClick = () => {
-        console.log("====== Shorten the URL");
-        // fetchShortenedURL();
-        setLongURL(tempLongURL);
-        
-        setShortURL(dummyData.shortenedURL);
-        console.log(">> shortenURL ", shortURL);
-        
+        setLongURL(tempLongURL);        
         setTempLongURL("");
+        let shortenResult = document.querySelector(".shortenResult");
+        shortenResult.style.visibility = "visible";
     }
 
     const handleCopyClick = async () => {
         await navigator.clipboard.writeText(`http://localhost:8080/rl/${shortURL}`);
-        console.log("COPY!!!!!!");
     }
 
     return (
@@ -105,7 +94,7 @@ const Homepage = () => {
                     </div>
                     <div className="down">
                         <p>
-                            Long URL: &nbsp;<a href={longURL}>{longURL}</a>
+                            Long URL: &nbsp;<a href={longURL} target="_blank">{longURL}</a>
                         </p>
                     </div>
                 </div>
