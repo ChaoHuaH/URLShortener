@@ -22,20 +22,19 @@ const Homepage = () => {
     useEffect(() => {
         if (longURL) {
           // Fetch data from the specified URL using longURL state
-        //   fetch(`http://localhost:8080/to-shortURL?longURL=${longURL}`, {
-        //     mode: "no-cors",
-        //     method: "get"
-        //   })
-        //     .then(response => {
-        //         console.log(response)
-        //         response.json()
-        //     })
-        //     .then(data => {
-        //         console.log(data)
-        //     })
-        //     .catch(error => {
-        //       console.error("Error fetching data:", error);
-        //     });
+           fetch(`http://localhost:8080/to-shortURL?longURL=${longURL}`, {
+             method: "get"
+           })
+             .then(response => {
+                 console.log(response)
+                 return response.json()
+             })
+             .then(data => {
+                 console.log(data)
+             })
+             .catch(error => {
+               console.error("Error fetching data:", error);
+             });
             console.log("in useFffect", "longURL: ", longURL);
         }
       }, [longURL]); // useEffect will run whenever longURL state changes
