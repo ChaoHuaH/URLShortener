@@ -1,11 +1,51 @@
-import React from "react";
+import {React, useState, useEffect} from "react";
 import { Link } from "react-router-dom";
 import ad_adobe from "../../images/adobe.png";
 import { IconContext } from "react-icons";
-import { FaBeer, FaTruck, FaRegSmile, FaRegFrown } from "react-icons/fa";
+import { FaBeer, FaTruck, FaRegSmile, FaRegFrown, FaRegCopy, FaEdit } from "react-icons/fa";
 import { TfiStatsUp } from "react-icons/tfi";
 
 const Homepage = () => {
+
+    let [shortURL, setShortURL] = useState("");
+    let [tempLongURL, setTempLongURL] = useState("");
+    let [longURL, setLongURL] = useState("");
+    const handleOnChange = (e) => {
+        let inputValue = e.target.value;
+        setTempLongURL(inputValue)
+    }
+
+    useEffect(() => {
+        if (longURL) {
+          // Fetch data from the specified URL using longURL state
+           fetch(`http://localhost:8080/to-shortURL?longURL=${longURL}`, {
+             method: "get"
+           })
+             .then(response => {
+                 return response.json()
+             })
+             .then(data => {
+                 setShortURL(data.shortenedURL);
+             })
+             .catch(error => {
+               console.error("Error fetching data:", error);
+             });
+        }
+      }, [longURL]);
+
+
+
+    const handleShortenClick = () => {
+        setLongURL(tempLongURL);        
+        setTempLongURL("");
+        let shortenResult = document.querySelector(".shortenResult");
+        shortenResult.style.visibility = "visible";
+    }
+
+    const handleCopyClick = async () => {
+        await navigator.clipboard.writeText(`http://localhost:8080/rl/${shortURL}`);
+    }
+
     return (
         <div className="homepage">
             <div className="urlShortenerContainer">
@@ -21,15 +61,45 @@ const Homepage = () => {
                         </Link>
                     </div>
                 </div>
-                <form action="" className="urlShortener">
+                <div className="urlShortener">
                     <input
-                        id="longURL"
+                        id="longURLInput"
                         type="text"
-                        name="longURL"
-                        placeholder=" Enter a link here"
+                        placeholder="Enter a link here"
+                        onChange={handleOnChange}
+                        value={tempLongURL}
                     />
-                    <button>Shorten</button>
-                </form>
+                    <button id="shorten" onClick={handleShortenClick}>Shorten</button>
+                </div>
+
+                <div className="shortenResult">
+                    <div className="up">
+                        <div className="left">
+                            <a href={shortURL}>{shortURL}</a>
+                            &nbsp;&nbsp;
+                            
+                        </div>
+                        <div className="right">
+                            <button onClick={handleCopyClick}>
+                                &nbsp;<FaRegCopy className="icon" /> Copy&nbsp;
+                            </button>
+                            <button>
+                                &nbsp;<FaEdit className="icon" /> Edit&nbsp;
+                            </button>
+                            <button>
+                                &nbsp;<TfiStatsUp className="icon" /> Stats&nbsp;
+                            </button>
+                        
+                        </div>
+                    </div>
+                    <div className="down">
+                        <p>
+                            Long URL: &nbsp;<a href={longURL} target="_blank">{longURL}</a>
+                        </p>
+                    </div>
+                </div>
+
+                {/* <button onClick={handleShortenClick}>add</button> */}
             </div>
 
             <div className="features">

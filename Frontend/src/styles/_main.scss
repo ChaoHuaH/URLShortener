@@ -22,7 +22,7 @@ main {
             }
 
             .advertisement {
-                flex: 0.5 1 20px;
+                flex: 2 1 50px;
                 margin: 1rem;
                 .ad img {
                     width: 50%;
@@ -30,12 +30,13 @@ main {
             }
 
             .urlShortener {
-                flex: 4 1 150px;
+                flex: 3 1 50px;
                 width: 70vw;
-                margin: 2.5rem 1rem 0rem 1rem;
+                margin: 1.5rem 1rem 0rem 1.2rem;
                 font-size: 1.5rem;
                 input {
-                    height: 30%;
+                    padding: 0.8rem;
+                    height: 100%;
                     width: 80%;
                     border-top-left-radius: 0.3rem;
                     border-bottom-left-radius: 0.3rem;
@@ -43,12 +44,70 @@ main {
                 button {
                     background-color: $themeColor;
                     color: white;
-                    height: 30%;
+                    height: 100%;
                     width: 20%;
                     border-top-right-radius: 0.3rem;
                     border-bottom-right-radius: 0.3rem;
                 }
             }
+
+            .shortenResult {
+                visibility: hidden;
+                border: 2px solid $themeColor;
+                border-top-left-radius: 0.3rem;
+                border-bottom-left-radius: 0.3rem;
+                border-top-right-radius: 0.3rem;
+                border-bottom-right-radius: 0.3rem;
+                flex: 2 1 30px;
+                display: flex;
+                flex-direction: column;
+                
+                align-items: center;
+                width: 70vw;
+                margin: 1.5rem 1rem 3rem 1.2rem;
+                font-size: 1.5rem;
+                .up {
+                    width: 100%;
+                    display: flex;
+                    justify-content: space-between;
+                    margin: 1rem;
+                    .left {
+                        margin: 0.5rem;
+                        a {
+                            color: blue;
+                        }
+                    }
+                    .right {
+                        margin: 0.8rem;
+                        button {
+                            width: 10vw;
+                            margin: 0.1rem;
+                            &:hover {
+                                background-color: $themeColor;
+                                color: white;
+                            }
+                        }
+                    }
+                }
+                .down {
+                    width: 100%;
+                    padding-left: 1rem;
+                    p {
+                        font-size: 1.5rem;
+                        text-align: left;
+                        margin: 0.5rem;
+                        word-wrap: break-word;
+                        a {
+                            color: lightslategray;
+                            &:hover {
+                                color: blue;
+                            }
+                        }
+                    }
+                }
+                
+            }
+
         }
 
         .features {

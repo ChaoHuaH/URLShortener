@@ -1,9 +1,20 @@
+@import url("https://fonts.googleapis.com/css2?family=Source+Sans+Pro:wght@300;400;600;700;900&display=swap");
 * {
   margin: 0;
   padding: 0;
 }
 
-h1, h2, h3, h4, h5, h6 {
+*:before,
+*:after {
+  box-sizing: border-box;
+}
+
+h1, h2, h3,
+h4 {
+  margin-top: 10px;
+}
+
+h5, h6 {
   font-weight: normal;
 }
 
@@ -97,20 +108,21 @@ main .homepage .urlShortenerContainer p {
   font-size: 2rem;
 }
 main .homepage .urlShortenerContainer .advertisement {
-  flex: 0.5 1 20px;
+  flex: 2 1 50px;
   margin: 1rem;
 }
 main .homepage .urlShortenerContainer .advertisement .ad img {
   width: 50%;
 }
 main .homepage .urlShortenerContainer .urlShortener {
-  flex: 4 1 150px;
+  flex: 3 1 50px;
   width: 70vw;
-  margin: 2.5rem 1rem 0rem 1rem;
+  margin: 1.5rem 1rem 0rem 1.2rem;
   font-size: 1.5rem;
 }
 main .homepage .urlShortenerContainer .urlShortener input {
-  height: 30%;
+  padding: 0.8rem;
+  height: 100%;
   width: 80%;
   border-top-left-radius: 0.3rem;
   border-bottom-left-radius: 0.3rem;
@@ -118,10 +130,64 @@ main .homepage .urlShortenerContainer .urlShortener input {
 main .homepage .urlShortenerContainer .urlShortener button {
   background-color: rgb(31, 72, 136);
   color: white;
-  height: 30%;
+  height: 100%;
   width: 20%;
   border-top-right-radius: 0.3rem;
   border-bottom-right-radius: 0.3rem;
+}
+main .homepage .urlShortenerContainer .shortenResult {
+  visibility: hidden;
+  border: 2px solid rgb(31, 72, 136);
+  border-top-left-radius: 0.3rem;
+  border-bottom-left-radius: 0.3rem;
+  border-top-right-radius: 0.3rem;
+  border-bottom-right-radius: 0.3rem;
+  flex: 2 1 30px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 70vw;
+  margin: 1.5rem 1rem 3rem 1.2rem;
+  font-size: 1.5rem;
+}
+main .homepage .urlShortenerContainer .shortenResult .up {
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  margin: 1rem;
+}
+main .homepage .urlShortenerContainer .shortenResult .up .left {
+  margin: 0.5rem;
+}
+main .homepage .urlShortenerContainer .shortenResult .up .left a {
+  color: blue;
+}
+main .homepage .urlShortenerContainer .shortenResult .up .right {
+  margin: 0.8rem;
+}
+main .homepage .urlShortenerContainer .shortenResult .up .right button {
+  width: 10vw;
+  margin: 0.1rem;
+}
+main .homepage .urlShortenerContainer .shortenResult .up .right button:hover {
+  background-color: rgb(31, 72, 136);
+  color: white;
+}
+main .homepage .urlShortenerContainer .shortenResult .down {
+  width: 100%;
+  padding-left: 1rem;
+}
+main .homepage .urlShortenerContainer .shortenResult .down p {
+  font-size: 1.5rem;
+  text-align: left;
+  margin: 0.5rem;
+  word-wrap: break-word;
+}
+main .homepage .urlShortenerContainer .shortenResult .down p a {
+  color: lightslategray;
+}
+main .homepage .urlShortenerContainer .shortenResult .down p a:hover {
+  color: blue;
 }
 main .homepage .features {
   min-height: 400px;
@@ -190,4 +256,131 @@ main .homepage .premium .plans .plan .pTag p {
 }
 .footer h3 {
   font-size: 1.25rem;
+}
+
+button,
+input,
+textarea {
+  font-family: "Source Sans Pro", sans-serif;
+}
+
+.main-header {
+  max-width: 768px;
+  width: 100%;
+  margin: 0 auto;
+  padding: 15px;
+}
+.main-header__inner {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+.main-header__left a {
+  color: #2a343f;
+  font-weight: 700;
+  font-size: 2rem;
+  text-decoration: none;
+  transition: all 0.3s ease;
+}
+.main-header__left a:hover {
+  opacity: 0.7;
+}
+.main-header__right {
+  display: flex;
+}
+
+.btn {
+  display: inline-block;
+  background-color: rgb(31, 72, 136);
+  padding: 10px 20px;
+  border: none;
+  color: #fff;
+  border-radius: 5px;
+  font-size: 1rem;
+  transition: all 0.2s ease;
+  text-decoration: none;
+}
+.btn:disabled {
+  pointer-events: none;
+  opacity: 0.5;
+}
+.btn:hover {
+  background-color: #868262;
+  cursor: pointer;
+}
+
+.auth {
+  display: flex;
+  margin-top: 50px;
+  align-items: center;
+  justify-content: center;
+}
+.auth__box {
+  max-width: 500px;
+  width: 100%;
+  padding: 50px;
+  background-color: #2a343f;
+  color: #fff;
+  border-radius: 5px;
+}
+.auth__header {
+  margin-bottom: 20px;
+  text-align: center;
+}
+.auth__field {
+  margin-bottom: 30px;
+}
+.auth__field label {
+  font-size: 1.5rem;
+  display: block;
+  margin-bottom: 10px;
+}
+.auth__field input {
+  background-color: #1f2732;
+  width: 100%;
+  padding: 15px;
+  border: none;
+  border-radius: 5px;
+  color: #fff;
+  font-size: 1.25rem;
+}
+.auth__field input:focus {
+  outline: none;
+}
+.auth__footer .btn {
+  width: 100%;
+}
+.auth__footer .auth__error {
+  margin-bottom: 1rem;
+  text-align: center;
+  font-size: 1.25rem;
+}
+.auth__error {
+  font-size: 1rem;
+  margin-top: 10px;
+  color: #fc6666;
+}
+.auth__register {
+  text-align: center;
+  margin-top: 20px;
+}
+.auth__register p {
+  margin-bottom: 0;
+}
+.auth__register a {
+  color: #fff;
+  font-weight: 700;
+  text-decoration: none;
+  transition: all 0.3s ease;
+}
+.auth__register a:hover {
+  opacity: 0.7;
+}
+
+.loading {
+  min-width: 100vw;
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }/*# sourceMappingURL=style.css.map */
