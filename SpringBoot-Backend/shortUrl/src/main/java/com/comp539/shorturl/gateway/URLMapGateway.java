@@ -1,5 +1,6 @@
 package com.comp539.shorturl.gateway;
 
+import com.comp539.shorturl.service.GenerateKey;
 import com.google.cloud.bigtable.data.v2.models.Mutation;
 import com.google.cloud.bigtable.data.v2.models.Row;
 import com.google.cloud.bigtable.data.v2.models.RowCell;
@@ -36,8 +37,19 @@ public class URLMapGateway extends BigTableAbstarctGateway {
         return false;
     }
 
-    public boolean existShortUrl(String shortUrl){
+
+    public boolean existShortUrl(String shortUrl) {
         Row result = readRow(URL_TABLE, shortUrl);
         return result != null && !result.getCells().isEmpty();
+    }
+    public boolean insertUrlMapWithRetries(String shortUrl, String longUrl, int numOfRetries, GenerateKey keyGenerator){
+        for(int i = 0; i < numOfRetries; i++){
+            boolean notExist = insertUrlMap(shortUrl, longUrl);
+            if(!notExist){
+                break;
+            }
+            shortUrl = keyGenerator.generateKey(longUrl);
+        }
+        return false;
     }
 }
