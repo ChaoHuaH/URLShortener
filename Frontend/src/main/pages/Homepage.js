@@ -84,7 +84,7 @@ const Homepage = ({longURL, setLongURL}) => {
                 <div className="shortenResult">
                     <div className="up">
                         <div className="left">
-                            <a href={shortURL}>{shortURL}</a>
+                            <a href={`http://localhost:8080/rl/${shortURL}`} target="_blank">{shortURL}</a>
                             &nbsp;&nbsp;
                             
                         </div>
