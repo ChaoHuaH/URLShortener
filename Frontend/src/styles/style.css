@@ -210,7 +210,7 @@ main .homepage .features .feature h3 {
   padding: 1rem;
 }
 main .homepage .features .feature p {
-  font-size: 1.25rem;
+  font-size: 1.5rem;
 }
 main .homepage .premium {
   min-height: 600px;
@@ -243,6 +243,7 @@ main .homepage .premium .plans .plan .pTag {
   padding: 0.5rem;
 }
 main .homepage .premium .plans .plan .pTag p {
+  font-size: 1.8rem;
   text-align: left;
 }
 
@@ -256,6 +257,93 @@ main .homepage .premium .plans .plan .pTag p {
 }
 .footer h3 {
   font-size: 1.25rem;
+}
+
+.customize {
+  display: flex;
+  align-items: center;
+  align-items: center;
+  flex-direction: column;
+}
+.customize .customized_area {
+  width: 70vw;
+  margin: 5rem 1rem 0rem 1.2rem;
+  font-size: 1.5rem;
+  align-items: center;
+  justify-self: center;
+}
+.customize .customized_area h3 {
+  font-size: 2rem;
+  color: rgb(31, 72, 136);
+}
+.customize .customized_area input {
+  padding: 0.8rem;
+  height: 100%;
+  width: 40%;
+  border-top-left-radius: 0.3rem;
+  border-bottom-left-radius: 0.3rem;
+}
+.customize .customized_area button {
+  background-color: rgb(31, 72, 136);
+  font-size: 1.8rem;
+  color: white;
+  height: 100%;
+  width: 20%;
+  padding: 0.45rem;
+  border-top-right-radius: 0.3rem;
+  border-bottom-right-radius: 0.3rem;
+}
+.customize .result_area {
+  border: 2px solid rgb(31, 72, 136);
+  border-top-left-radius: 0.3rem;
+  border-bottom-left-radius: 0.3rem;
+  border-top-right-radius: 0.3rem;
+  border-bottom-right-radius: 0.3rem;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 70vw;
+  margin: 1.5rem 1rem 3rem 1.2rem;
+  font-size: 2rem;
+}
+.customize .result_area .up {
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  margin: 1rem;
+}
+.customize .result_area .up .left {
+  margin: 0.5rem;
+}
+.customize .result_area .up .left a {
+  color: blue;
+}
+.customize .result_area .up .right {
+  margin: 0.8rem;
+}
+.customize .result_area .up .right button {
+  width: 10vw;
+  margin: 0.1rem;
+}
+.customize .result_area .up .right button:hover {
+  background-color: rgb(31, 72, 136);
+  color: white;
+}
+.customize .result_area .down {
+  width: 100%;
+  padding-left: 1rem;
+}
+.customize .result_area .down p {
+  font-size: 1.5rem;
+  text-align: left;
+  margin: 0.5rem;
+  word-wrap: break-word;
+}
+.customize .result_area .down p a {
+  color: lightslategray;
+}
+.customize .result_area .down p a:hover {
+  color: blue;
 }
 
 button,
