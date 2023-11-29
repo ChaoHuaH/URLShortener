@@ -32,6 +32,7 @@ public class URLConversionController {
     @RequestMapping("/rl/{shortUrl}")
     public RedirectView redirectLongURL(@PathVariable("shortUrl") String shortUrl) {
         String longUrl = urlConversionService.toLongUrl(shortUrl);
+        System.out.println("The long url about to redirect is " + longUrl);
         RedirectView redirectView = new RedirectView();
         redirectView.setUrl(longUrl);
         return redirectView;

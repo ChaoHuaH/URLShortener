@@ -11,11 +11,13 @@ public class URLConversionService {
     private URLMapGateway urlMapGateway;
     private HashingUtil hashingUtil;
     private URLDecodingUtil urlDecodingUtil;
+    private RowKeyGenerator rowKeyGenerator;
 
-    URLConversionService(URLMapGateway urlMapGateway, HashingUtil hashingUtil, URLDecodingUtil urlDecodingUtil){
+    URLConversionService(URLMapGateway urlMapGateway, HashingUtil hashingUtil, URLDecodingUtil urlDecodingUtil, RowKeyGenerator rowKeyGenerator){
         this.urlMapGateway = urlMapGateway;
         this.hashingUtil = hashingUtil;
         this.urlDecodingUtil = urlDecodingUtil;
+        this.rowKeyGenerator = rowKeyGenerator;
     }
 
     public String toLongUrl(String shortUrl){
@@ -25,7 +27,7 @@ public class URLConversionService {
     public String toShortUrl(String longUrl){
         String shortUrl = hashingUtil.generateBase62Hash(longUrl).substring(0,6);
         String decodedLongUrl = urlDecodingUtil.decodeUrl(longUrl);
-        urlMapGateway.insertUrlMapWithRetries(shortUrl, decodedLongUrl, 3);
+        urlMapGateway.insertUrlMapWithRetries(shortUrl, decodedLongUrl, 3, rowKeyGenerator);
         return shortUrl;
     }
 
