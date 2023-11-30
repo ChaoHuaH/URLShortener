@@ -16,9 +16,9 @@ public class JwtTokenProvider {
     @Value("${jwt.expirationMs}")
     private int jwtExpirationMs;
 
-    public String createToken(Long userId, String email) {
+    public String createToken(String email) {
         return JWT.create()
-                .withSubject(String.valueOf(userId))
+                .withSubject(email)
                 .withClaim("email", email)
                 .withIssuedAt(new Date())
                 .withExpiresAt(new Date(System.currentTimeMillis() + jwtExpirationMs))
