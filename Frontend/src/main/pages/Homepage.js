@@ -4,12 +4,13 @@ import ad_adobe from "../../images/adobe.png";
 import { IconContext } from "react-icons";
 import { FaBeer, FaTruck, FaRegSmile, FaRegFrown, FaRegCopy, FaEdit } from "react-icons/fa";
 import { TfiStatsUp } from "react-icons/tfi";
+import { useNavigate } from "react-router-dom";
 
-const Homepage = () => {
+const Homepage = ({longURL, setLongURL}) => {
 
     let [shortURL, setShortURL] = useState("");
     let [tempLongURL, setTempLongURL] = useState("");
-    let [longURL, setLongURL] = useState("");
+    // let [longURL, setLongURL] = useState("");
     const handleOnChange = (e) => {
         let inputValue = e.target.value;
         setTempLongURL(inputValue)
@@ -43,7 +44,15 @@ const Homepage = () => {
     }
 
     const handleCopyClick = async () => {
+        console.log("copy")
         await navigator.clipboard.writeText(`http://localhost:8080/rl/${shortURL}`);
+    }
+
+    const navigate = useNavigate()
+    const handleEditClick = () => {
+        console.log("redirect")
+        let path = '/customization';
+        navigate(path);
     }
 
     return (
@@ -75,7 +84,7 @@ const Homepage = () => {
                 <div className="shortenResult">
                     <div className="up">
                         <div className="left">
-                            <a href={shortURL}>{shortURL}</a>
+                            <a href={`http://localhost:8080/rl/${shortURL}`} target="_blank">{shortURL}</a>
                             &nbsp;&nbsp;
                             
                         </div>
@@ -83,7 +92,7 @@ const Homepage = () => {
                             <button onClick={handleCopyClick}>
                                 &nbsp;<FaRegCopy className="icon" /> Copy&nbsp;
                             </button>
-                            <button>
+                            <button onClick={handleEditClick}>
                                 &nbsp;<FaEdit className="icon" /> Edit&nbsp;
                             </button>
                             <button>
@@ -150,20 +159,16 @@ const Homepage = () => {
                         </h3>
                         <div className="pTag">
                             <p>
-                                <FaRegSmile color="green" />
-                                <span> 5 Monthly Short Links</span>
+                                <FaRegSmile color="green" />&nbsp;&nbsp;
+                                <span> 30 Monthly Short Links</span>
                             </p>
                             <p>
-                                <FaRegFrown color="red" />
-                                <span> Lorem ipsum dolor sit amet.</span>
+                                <FaRegSmile color="green" />&nbsp;&nbsp;
+                                <span> Basic Link Redirects</span>
                             </p>
                             <p>
-                                <FaRegFrown color="red" />
-                                <span> Lorem ipsum dolor sit amet.</span>
-                            </p>
-                            <p>
-                                <FaRegFrown color="red" />
-                                <span> Lorem ipsum dolor sit amet.</span>
+                                <FaRegFrown color="red" />&nbsp;&nbsp;
+                                <span> Advertisement Included</span>
                             </p>
                         </div>
                     </div>
@@ -175,20 +180,16 @@ const Homepage = () => {
                         </h3>
                         <div className="pTag">
                             <p>
-                                <FaRegSmile color="green" />
-                                <span> 50 Monthly Short Links</span>
+                                <FaRegSmile color="green" />&nbsp;&nbsp;
+                                <span> 100 Monthly Short Links</span>
                             </p>
                             <p>
-                                <FaRegSmile color="green" />
-                                <span> Lorem ipsum dolor sit amet.</span>
+                                <FaRegSmile color="green" />&nbsp;&nbsp;
+                                <span> Custom Link Redirects</span>
                             </p>
                             <p>
-                                <FaRegFrown color="red" />
-                                <span> Lorem ipsum dolor sit amet.</span>
-                            </p>
-                            <p>
-                                <FaRegFrown color="red" />
-                                <span> Lorem ipsum dolor sit amet.</span>
+                                <FaRegSmile color="green" />&nbsp;&nbsp;
+                                <span> No Advertisement</span>
                             </p>
                         </div>
                     </div>
@@ -200,20 +201,24 @@ const Homepage = () => {
                         </h3>
                         <div className="pTag">
                             <p>
-                                <FaRegSmile color="green" />
-                                <span> 500 Monthly Short Links</span>
+                                <FaRegSmile color="green" />&nbsp;&nbsp;
+                                <span> Unlimited Short Links</span>
                             </p>
                             <p>
-                                <FaRegSmile color="green" />
-                                <span> Lorem ipsum dolor sit amet.</span>
+                                <FaRegSmile color="green" />&nbsp;&nbsp;
+                                <span> Custom Link Redirects</span>
                             </p>
                             <p>
-                                <FaRegSmile color="green" />
-                                <span> Lorem ipsum dolor sit amet.</span>
+                                <FaRegSmile color="green" />&nbsp;&nbsp;
+                                <span> No Advertisement</span>
                             </p>
                             <p>
-                                <FaRegSmile color="green" />
-                                <span> Lorem ipsum dolor sit amet.</span>
+                                <FaRegSmile color="green" />&nbsp;&nbsp;
+                                <span> Analysis</span>
+                            </p>
+                            <p>
+                                <FaRegSmile color="green" />&nbsp;&nbsp;
+                                <span> 24/7 email phone support</span>
                             </p>
                         </div>
                     </div>

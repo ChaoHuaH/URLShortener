@@ -1,0 +1,93 @@
+.customize {
+    display: flex;
+    align-items: center;
+    align-items: center;
+    flex-direction: column;
+    .customized_area {
+        // border: 3px solid green;
+
+        width: 70vw;
+        margin: 5rem 1rem 0rem 1.2rem;
+        font-size: 1.5rem;
+        align-items: center;
+        justify-self: center;
+
+
+        h3 {
+            font-size: 2rem;
+            color: $themeColor;
+
+        }
+        input {
+            // border: 3px solid green;
+            padding: 0.8rem;
+            height: 100%;
+            width: 40%;
+            border-top-left-radius: 0.3rem;
+            border-bottom-left-radius: 0.3rem;
+        }
+        button {
+            // border: 3px solid green;
+            background-color: $themeColor;
+            font-size: 1.8rem;
+            color: white;
+            height: 100%;
+            width: 20%;
+            padding: 0.45rem;
+            border-top-right-radius: 0.3rem;
+            border-bottom-right-radius: 0.3rem;
+        }
+    }
+    .result_area {
+        border: 2px solid $themeColor;
+        border-top-left-radius: 0.3rem;
+        border-bottom-left-radius: 0.3rem;
+        border-top-right-radius: 0.3rem;
+        border-bottom-right-radius: 0.3rem;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        width: 70vw;
+        margin: 1.5rem 1rem 3rem 1.2rem;
+        font-size: 2rem;
+        .up {
+            width: 100%;
+            display: flex;
+            justify-content: space-between;
+            margin: 1rem;
+            .left {
+                margin: 0.5rem;
+                a {
+                    color: blue;
+                }
+            }
+            .right {
+                margin: 0.8rem;
+                button {
+                    width: 10vw;
+                    margin: 0.1rem;
+                    &:hover {
+                        background-color: $themeColor;
+                        color: white;
+                    }
+                }
+            }
+        }
+        .down {
+            width: 100%;
+            padding-left: 1rem;
+            p {
+                font-size: 1.5rem;
+                text-align: left;
+                margin: 0.5rem;
+                word-wrap: break-word;
+                a {
+                    color: lightslategray;
+                    &:hover {
+                        color: blue;
+                    }
+                }
+            }
+        }
+    }
+}
