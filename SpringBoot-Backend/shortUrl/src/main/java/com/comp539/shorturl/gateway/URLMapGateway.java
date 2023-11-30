@@ -23,14 +23,14 @@ public class URLMapGateway extends BigTableAbstarctGateway {
 
     public boolean insertUrlMap(String shortUrl, String longUrl){
         Mutation mutation = Mutation.create().setCell(FAMILIY_NAME, COLUMN_NAME, longUrl);
-        boolean notExist = mutateWhenNotExist(URL_TABLE, shortUrl, mutation);
-        return notExist;
+        boolean isExist = mutateWhenNotExist(URL_TABLE, shortUrl, mutation);
+        return isExist;
     }
 
     public boolean insertUrlMapWithRetries(String shortUrl, String longUrl, int numOfRetries){
         for(int i = 0; i < numOfRetries; i++){
-            boolean notExist = insertUrlMap(shortUrl, longUrl);
-            if(!notExist){
+            boolean isKeyExist = insertUrlMap(shortUrl, longUrl);
+            if(!isKeyExist){
                 break;
             }
         }
@@ -44,8 +44,8 @@ public class URLMapGateway extends BigTableAbstarctGateway {
     }
     public boolean insertUrlMapWithRetries(String shortUrl, String longUrl, int numOfRetries, GenerateKey keyGenerator){
         for(int i = 0; i < numOfRetries; i++){
-            boolean notExist = insertUrlMap(shortUrl, longUrl);
-            if(!notExist){
+            boolean isKeyExist = insertUrlMap(shortUrl, longUrl);
+            if(!isKeyExist){
                 break;
             }
             shortUrl = keyGenerator.generateKey(longUrl);
