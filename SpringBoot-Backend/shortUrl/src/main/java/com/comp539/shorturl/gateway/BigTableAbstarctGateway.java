@@ -39,8 +39,8 @@ public abstract class BigTableAbstarctGateway {
     public boolean mutateWhenNotExist(String tableId, String rowKey, Mutation mutation){
         Filters.Filter filter = FILTERS.key().regex(rowKey);
         ConditionalRowMutation conditionalRowMutation = ConditionalRowMutation.create(tableId, rowKey).condition(filter).otherwise(mutation);
-        boolean success = dataClient.checkAndMutateRow(conditionalRowMutation);
-        return success;
+        boolean isKeyExist = dataClient.checkAndMutateRow(conditionalRowMutation);
+        return isKeyExist;
     }
 
 }
