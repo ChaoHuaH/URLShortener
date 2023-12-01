@@ -8,7 +8,7 @@ import org.springframework.web.bind.annotation.*;
 @RequestMapping("/api/auth")
 public class AuthController {
 
-    private UserService userService;
+    private final UserService userService;
 
     public AuthController(UserService userService) {
         this.userService = userService;
@@ -18,7 +18,7 @@ public class AuthController {
     public ResponseEntity<?> registerUser(@RequestParam String email, @RequestParam String password, @RequestParam String name) {
         try {
             userService.registerUser(email, password, name);
-            return ResponseEntity.ok().body("User registered successfully");
+            return ResponseEntity.ok("User registered successfully");
         } catch (Exception e) {
             return ResponseEntity.badRequest().body("Registration failed: " + e.getMessage());
         }
@@ -28,7 +28,7 @@ public class AuthController {
     public ResponseEntity<?> loginUser(@RequestParam String email, @RequestParam String password) {
         try {
             String token = userService.authenticateUser(email, password);
-            return ResponseEntity.ok().body(token);
+            return ResponseEntity.ok(token);
         } catch (Exception e) {
             return ResponseEntity.badRequest().body("Login failed: " + e.getMessage());
         }
