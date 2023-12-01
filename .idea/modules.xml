@@ -2,7 +2,7 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
-      <module fileurl="file://$PROJECT_DIR$/.idea/SpringBoot-Backend.iml" filepath="$PROJECT_DIR$/.idea/SpringBoot-Backend.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/URLShortener.iml" filepath="$PROJECT_DIR$/.idea/URLShortener.iml" />
     </modules>
   </component>
 </project>
