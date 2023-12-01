@@ -1,11 +1,60 @@
-import React from "react";
+import {React, useState, useEffect} from "react";
 import { Link } from "react-router-dom";
 import ad_adobe from "../../images/adobe.png";
 import { IconContext } from "react-icons";
-import { FaBeer, FaTruck, FaRegSmile, FaRegFrown } from "react-icons/fa";
+import { FaBeer, FaTruck, FaRegSmile, FaRegFrown, FaRegCopy, FaEdit } from "react-icons/fa";
 import { TfiStatsUp } from "react-icons/tfi";
+import { useNavigate } from "react-router-dom";
 
-const Homepage = () => {
+const Homepage = ({longURL, setLongURL}) => {
+
+    let [shortURL, setShortURL] = useState("");
+    let [tempLongURL, setTempLongURL] = useState("");
+    // let [longURL, setLongURL] = useState("");
+    const handleOnChange = (e) => {
+        let inputValue = e.target.value;
+        setTempLongURL(inputValue)
+    }
+
+    useEffect(() => {
+        if (longURL) {
+          // Fetch data from the specified URL using longURL state
+           fetch(`http://localhost:8080/to-shortURL?longURL=${longURL}`, {
+             method: "get"
+           })
+             .then(response => {
+                 return response.json()
+             })
+             .then(data => {
+                 setShortURL(data.shortenedURL);
+             })
+             .catch(error => {
+               console.error("Error fetching data:", error);
+             });
+        }
+      }, [longURL]);
+
+
+
+    const handleShortenClick = () => {
+        setLongURL(tempLongURL);        
+        setTempLongURL("");
+        let shortenResult = document.querySelector(".shortenResult");
+        shortenResult.style.visibility = "visible";
+    }
+
+    const handleCopyClick = async () => {
+        console.log("copy")
+        await navigator.clipboard.writeText(`http://localhost:8080/rl/${shortURL}`);
+    }
+
+    const navigate = useNavigate()
+    const handleEditClick = () => {
+        console.log("redirect")
+        let path = '/customization';
+        navigate(path);
+    }
+
     return (
         <div className="homepage">
             <div className="urlShortenerContainer">
@@ -21,15 +70,45 @@ const Homepage = () => {
                         </Link>
                     </div>
                 </div>
-                <form action="" className="urlShortener">
+                <div className="urlShortener">
                     <input
-                        id="longURL"
+                        id="longURLInput"
                         type="text"
-                        name="longURL"
-                        placeholder=" Enter a link here"
+                        placeholder="Enter a link here"
+                        onChange={handleOnChange}
+                        value={tempLongURL}
                     />
-                    <button>Shorten</button>
-                </form>
+                    <button id="shorten" onClick={handleShortenClick}>Shorten</button>
+                </div>
+
+                <div className="shortenResult">
+                    <div className="up">
+                        <div className="left">
+                            <a href={`http://localhost:8080/rl/${shortURL}`} target="_blank">{shortURL}</a>
+                            &nbsp;&nbsp;
+                            
+                        </div>
+                        <div className="right">
+                            <button onClick={handleCopyClick}>
+                                &nbsp;<FaRegCopy className="icon" /> Copy&nbsp;
+                            </button>
+                            <button onClick={handleEditClick}>
+                                &nbsp;<FaEdit className="icon" /> Edit&nbsp;
+                            </button>
+                            <button>
+                                &nbsp;<TfiStatsUp className="icon" /> Stats&nbsp;
+                            </button>
+                        
+                        </div>
+                    </div>
+                    <div className="down">
+                        <p>
+                            Long URL: &nbsp;<a href={longURL} target="_blank">{longURL}</a>
+                        </p>
+                    </div>
+                </div>
+
+                {/* <button onClick={handleShortenClick}>add</button> */}
             </div>
 
             <div className="features">
@@ -80,20 +159,16 @@ const Homepage = () => {
                         </h3>
                         <div className="pTag">
                             <p>
-                                <FaRegSmile color="green" />
-                                <span> 5 Monthly Short Links</span>
+                                <FaRegSmile color="green" />&nbsp;&nbsp;
+                                <span> 30 Monthly Short Links</span>
                             </p>
                             <p>
-                                <FaRegFrown color="red" />
-                                <span> Lorem ipsum dolor sit amet.</span>
+                                <FaRegSmile color="green" />&nbsp;&nbsp;
+                                <span> Basic Link Redirects</span>
                             </p>
                             <p>
-                                <FaRegFrown color="red" />
-                                <span> Lorem ipsum dolor sit amet.</span>
-                            </p>
-                            <p>
-                                <FaRegFrown color="red" />
-                                <span> Lorem ipsum dolor sit amet.</span>
+                                <FaRegFrown color="red" />&nbsp;&nbsp;
+                                <span> Advertisement Included</span>
                             </p>
                         </div>
                     </div>
@@ -105,20 +180,16 @@ const Homepage = () => {
                         </h3>
                         <div className="pTag">
                             <p>
-                                <FaRegSmile color="green" />
-                                <span> 50 Monthly Short Links</span>
+                                <FaRegSmile color="green" />&nbsp;&nbsp;
+                                <span> 100 Monthly Short Links</span>
                             </p>
                             <p>
-                                <FaRegSmile color="green" />
-                                <span> Lorem ipsum dolor sit amet.</span>
+                                <FaRegSmile color="green" />&nbsp;&nbsp;
+                                <span> Custom Link Redirects</span>
                             </p>
                             <p>
-                                <FaRegFrown color="red" />
-                                <span> Lorem ipsum dolor sit amet.</span>
-                            </p>
-                            <p>
-                                <FaRegFrown color="red" />
-                                <span> Lorem ipsum dolor sit amet.</span>
+                                <FaRegSmile color="green" />&nbsp;&nbsp;
+                                <span> No Advertisement</span>
                             </p>
                         </div>
                     </div>
@@ -130,20 +201,24 @@ const Homepage = () => {
                         </h3>
                         <div className="pTag">
                             <p>
-                                <FaRegSmile color="green" />
-                                <span> 500 Monthly Short Links</span>
+                                <FaRegSmile color="green" />&nbsp;&nbsp;
+                                <span> Unlimited Short Links</span>
                             </p>
                             <p>
-                                <FaRegSmile color="green" />
-                                <span> Lorem ipsum dolor sit amet.</span>
+                                <FaRegSmile color="green" />&nbsp;&nbsp;
+                                <span> Custom Link Redirects</span>
                             </p>
                             <p>
-                                <FaRegSmile color="green" />
-                                <span> Lorem ipsum dolor sit amet.</span>
+                                <FaRegSmile color="green" />&nbsp;&nbsp;
+                                <span> No Advertisement</span>
                             </p>
                             <p>
-                                <FaRegSmile color="green" />
-                                <span> Lorem ipsum dolor sit amet.</span>
+                                <FaRegSmile color="green" />&nbsp;&nbsp;
+                                <span> Analysis</span>
+                            </p>
+                            <p>
+                                <FaRegSmile color="green" />&nbsp;&nbsp;
+                                <span> 24/7 email phone support</span>
                             </p>
                         </div>
                     </div>

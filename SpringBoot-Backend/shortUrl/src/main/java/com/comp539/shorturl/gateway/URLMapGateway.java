@@ -1,5 +1,6 @@
 package com.comp539.shorturl.gateway;
 
+import com.comp539.shorturl.service.GenerateKey;
 import com.google.cloud.bigtable.data.v2.models.Mutation;
 import com.google.cloud.bigtable.data.v2.models.Row;
 import com.google.cloud.bigtable.data.v2.models.RowCell;
@@ -22,16 +23,32 @@ public class URLMapGateway extends BigTableAbstarctGateway {
 
     public boolean insertUrlMap(String shortUrl, String longUrl){
         Mutation mutation = Mutation.create().setCell(FAMILIY_NAME, COLUMN_NAME, longUrl);
-        boolean notExist = mutateWhenNotExist(URL_TABLE, shortUrl, mutation);
-        return notExist;
+        boolean isExist = mutateWhenNotExist(URL_TABLE, shortUrl, mutation);
+        return isExist;
     }
 
     public boolean insertUrlMapWithRetries(String shortUrl, String longUrl, int numOfRetries){
         for(int i = 0; i < numOfRetries; i++){
-            boolean notExist = insertUrlMap(shortUrl, longUrl);
-            if(!notExist){
+            boolean isKeyExist = insertUrlMap(shortUrl, longUrl);
+            if(!isKeyExist){
                 break;
             }
+        }
+        return false;
+    }
+
+
+    public boolean existShortUrl(String shortUrl) {
+        Row result = readRow(URL_TABLE, shortUrl);
+        return result != null && !result.getCells().isEmpty();
+    }
+    public boolean insertUrlMapWithRetries(String shortUrl, String longUrl, int numOfRetries, GenerateKey keyGenerator){
+        for(int i = 0; i < numOfRetries; i++){
+            boolean isKeyExist = insertUrlMap(shortUrl, longUrl);
+            if(!isKeyExist){
+                break;
+            }
+            shortUrl = keyGenerator.generateKey(longUrl);
         }
         return false;
     }
