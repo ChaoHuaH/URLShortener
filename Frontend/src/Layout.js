@@ -7,7 +7,6 @@ import logo from './images/LinkPulseLogo.png';
 
 function Layout() {
     const {pathname} = useLocation();
-    const {user, Logout} = useGlobalContext();
   return (
       <div className="layout">
           <nav>
@@ -22,16 +21,7 @@ function Layout() {
                     <li>
                         <Link to="/premium">Premium</Link>
                     </li>
-                    {user ? (
-                        <>
-                            <li>
-                                <h4>Hello {user.name}!</h4>
-                            </li>
-                            <li>
-                                <button className="btn" onClick={Logout}>Logout</button>
-                            </li>
-                        </>
-                    ) : (
+                    {
                         pathname === "/" ? (
                             <li>
                                 <Link to="/register"> Register </Link>
@@ -42,7 +32,8 @@ function Layout() {
                                 <Link to="/login" > Login </Link>
                             </li>
                         )
-                    )}
+                    }
+
                 </ul>
               </div>
           </nav>

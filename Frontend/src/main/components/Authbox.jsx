@@ -4,55 +4,57 @@ import { Link, useNavigate } from "react-router-dom";
 import { useGlobalContext } from "../../context/GlobalContext";
 import "../../styles/style.scss";
 const AuthBox = ({register}) => {
-    const {getCurrentUser, user} = useGlobalContext();
+    const {loggedin, setLoggedin} = useGlobalContext();
 
     const [email, setEmail] = useState("");
     const [name, setName] = useState("");
     const [password, setPassword] = useState("");
-    const [confirmPassword, setConfirmPassword] = useState("");
 
     const [loading, setLoading] = useState(false);
-    const [errors, setErrors] = useState({});
 
     const navigate = useNavigate();
-    useEffect(() => {
-        if (user) {
-            navigate("/")
-        }
-    }, [user, navigate])
 
-    const onSubmit = (e) => {
+    const onSubmit = async (e) => {
         e.preventDefault();
         setLoading(true);
-
-        let data = {};
-
+    
+        const formData = new URLSearchParams();
+    
         if (register){
-            data = {
-                name,
-                email,
-                password,
-                confirmPassword,
-            };
+            formData.append('name', name);
+            formData.append('email', email);
+            formData.append('password', password);
         } else {
-            data = {
-                email,
-                password,
-            };
+            formData.append('email', email);
+            formData.append('password', password);
         }
-
-        axios.post(register ? "http://localhost:5001/api/auth/register" : "http://localhost:5001/api/auth/login", data, {withCredentials: true})
-        .then(() => {
-            console.log("login success")
-            getCurrentUser();
-        }).catch (err => {
+    
+        try {
+            const response = await axios.post(
+                register ? "http://localhost:8080/api/auth/register" : "http://localhost:8080/api/auth/login",
+                formData,
+                {
+                    headers: {
+                        'Content-Type': 'application/x-www-form-urlencoded',
+                    }
+                }
+            );
+            
             setLoading(false);
-
-            if (err?.response?.data) {
-                setErrors(err.response.data);
+            if (register) {
+                if (response.data === "User registered successfully") {
+                    alert("User registered successfully");
+                    navigate('/login');
+                }
+            } else {
+                navigate('/customization');
+                setLoggedin(true);
             }
-        })
-    }
+        } catch (err) {
+            setLoading(false);
+            console.error("An error occurred", err);
+        }
+    };
     return (
         <div className="auth">
             <div className="auth__box">
@@ -65,35 +67,20 @@ const AuthBox = ({register}) => {
                             <label>Name</label>
                             <input type="text" value={name}
                             onChange={(e) => setName(e.target.value)}/>
-
-                            {errors.name && <p className="auth__error">{errors.name}</p>}
                         </div>
                     }
                     <div className="auth__field">
                         <label>Email</label>
                         <input type="text" value={email}
                         onChange={(e) => setEmail(e.target.value)}/>
-                        {errors.email && <p className="auth__error">{errors.email}</p>}
                     </div>
                     <div className="auth__field">
                         <label>Password</label>
                         <input type="password" value={password}
                         onChange={(e) => setPassword(e.target.value)}/>
-                        {errors.password && <p className="auth__error">{errors.password}</p>}
                     </div>
-                    {register &&                     
-                        <div className="auth__field">
-                            <label>Confirm Password</label>
-                            <input type="text" value={confirmPassword}
-                            onChange={(e) => setConfirmPassword(e.target.value)}/>
-                            {errors.confirmPassword && <p className="auth__error">{errors.confirmPassword}</p>}
-                        </div>
-                    }
 
                     <div className="auth__footer">
-                        {Object.keys(errors).length > 0 && (
-                            <div className="p auth__error">{register ? "You have some validation issues." : errors.error}</div>
-                        )}
                         <button className="btn" disabled={loading} type="submit"> {register ? "Register" : "Login"} </button>
                         {!register ? (
                             <div className="auth__register">

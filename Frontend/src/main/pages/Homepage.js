@@ -1,13 +1,15 @@
-import {React, useState, useEffect} from "react";
+import {React, useState, useEffect, useContext} from "react";
 import { Link } from "react-router-dom";
 import ad_adobe from "../../images/adobe.png";
 import { IconContext } from "react-icons";
 import { FaBeer, FaTruck, FaRegSmile, FaRegFrown, FaRegCopy, FaEdit } from "react-icons/fa";
 import { TfiStatsUp } from "react-icons/tfi";
 import { useNavigate } from "react-router-dom";
+import { useGlobalContext } from "../../context/GlobalContext";
 
 const Homepage = ({longURL, setLongURL}) => {
 
+    const {loggedin} = useGlobalContext();
     let [shortURL, setShortURL] = useState("");
     let [tempLongURL, setTempLongURL] = useState("");
     // let [longURL, setLongURL] = useState("");
@@ -50,9 +52,13 @@ const Homepage = ({longURL, setLongURL}) => {
 
     const navigate = useNavigate()
     const handleEditClick = () => {
-        console.log("redirect")
-        let path = '/customization';
-        navigate(path);
+        if (loggedin) {
+            console.log("redirect")
+            let path = '/customization';
+            navigate(path);
+        } else {
+            alert("Please login first.");
+        }
     }
 
     return (
