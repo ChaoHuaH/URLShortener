@@ -86,7 +86,6 @@ const Homepage = ({longURL, setLongURL}) => {
     
     useEffect(() => {
         if (longURL) {
-          // Fetch data from the specified URL using longURL state
            fetch(`http://localhost:8080/to-shortURL?longURL=${longURL}`, {
              method: "get"
            })

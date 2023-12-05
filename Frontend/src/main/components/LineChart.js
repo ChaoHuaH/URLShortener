@@ -26,7 +26,7 @@ const LineChart = ({ data }) => {
                 }
             }
         });
-    }, [data]); // Re-run when data changes
+    }, [data]);
 
     return <canvas ref={chartRef}></canvas>;
 };
