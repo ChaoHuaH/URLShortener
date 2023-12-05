@@ -6,18 +6,84 @@ import { FaBeer, FaTruck, FaRegSmile, FaRegFrown, FaRegCopy, FaEdit } from "reac
 import { TfiStatsUp } from "react-icons/tfi";
 import { useNavigate } from "react-router-dom";
 import { useGlobalContext } from "../../context/GlobalContext";
+import LineChart from "../components/LineChart";
+
+/** 
+ * const chartData = {
+    "dailyVisitCounts": [
+        {
+            "date": "2023-11-01",
+            "viewCount": 12
+        },
+        {
+            "date": "2023-11-02",
+            "viewCount": 17
+        },
+        {
+            "date": "2023-11-03",
+            "viewCount": 8
+        },
+        {
+            "date": "2023-11-04",
+            "viewCount": 15
+        },
+        {
+            "date": "2023-11-05",
+            "viewCount": 20
+        },
+        {
+            "date": "2023-11-06",
+            "viewCount": 25
+        },
+        {
+            "date": "2023-11-07",
+            "viewCount": 18
+        },
+        {
+            "date": "2023-11-08",
+            "viewCount": 22
+        },
+        {
+            "date": "2023-11-09",
+            "viewCount": 24
+        },
+        {
+            "date": "2023-11-10",
+            "viewCount": 19
+        }
+    ]
+};
+ * 
+*/
 
 const Homepage = ({longURL, setLongURL}) => {
 
     const {loggedin} = useGlobalContext();
     let [shortURL, setShortURL] = useState("");
     let [tempLongURL, setTempLongURL] = useState("");
+    const [analytic, setAnalytic] = useState({});
+    const [show, setShow] = useState(false);
     // let [longURL, setLongURL] = useState("");
+    const { getCurrentDate, getDate30DaysAgo } = require('./FormatDate');
+    const currentDate = getCurrentDate();
+    const aMonthAgo = getDate30DaysAgo();
     const handleOnChange = (e) => {
         let inputValue = e.target.value;
         setTempLongURL(inputValue)
     }
+    
+    const fetchAnalyticsData = async () => {
+        try {
+            const response = await fetch(`http://localhost:8080/analytic?url=${longURL}/&start=${aMonthAgo}/&end=${currentDate}`);
+            const data = await response.json();
+            console.log(data);
+            setAnalytic(data);
+        } catch (error) {
+            console.log(error);
+        }
 
+    }
+    
     useEffect(() => {
         if (longURL) {
           // Fetch data from the specified URL using longURL state
@@ -34,6 +100,8 @@ const Homepage = ({longURL, setLongURL}) => {
                console.error("Error fetching data:", error);
              });
         }
+        console.log(currentDate);
+        fetchAnalyticsData();
       }, [longURL]);
 
 
@@ -48,6 +116,10 @@ const Homepage = ({longURL, setLongURL}) => {
     const handleCopyClick = async () => {
         console.log("copy")
         await navigator.clipboard.writeText(`http://localhost:8080/rl/${shortURL}`);
+    }
+
+    const handleStatsClick = () => {
+        setShow(true);
     }
 
     const navigate = useNavigate()
@@ -101,7 +173,7 @@ const Homepage = ({longURL, setLongURL}) => {
                             <button onClick={handleEditClick}>
                                 &nbsp;<FaEdit className="icon" /> Edit&nbsp;
                             </button>
-                            <button>
+                            <button onClick={handleStatsClick}>
                                 &nbsp;<TfiStatsUp className="icon" /> Stats&nbsp;
                             </button>
                         
@@ -113,6 +185,12 @@ const Homepage = ({longURL, setLongURL}) => {
                         </p>
                     </div>
                 </div>
+                {show && 
+                    <div>
+                        <h1>Website Veiwcount of Past 30 Days</h1>
+                        <LineChart data={analytic} />
+                    </div>
+                }
 
                 {/* <button onClick={handleShortenClick}>add</button> */}
             </div>
