@@ -2,6 +2,7 @@ package com.comp539.shorturl.controller;
 
 import com.comp539.shorturl.dto.ToShortURLResponse;
 import com.comp539.shorturl.service.URLConversionService;
+import com.comp539.shorturl.service.ViewCountTackingService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.ResponseEntity;
@@ -13,9 +14,11 @@ import org.springframework.web.servlet.view.RedirectView;
 public class URLConversionController {
 
     private URLConversionService urlConversionService;
+    private ViewCountTackingService viewCountTackingService;
 
-    URLConversionController(URLConversionService urlConversionService){
+    URLConversionController(URLConversionService urlConversionService, ViewCountTackingService viewCountTackingService){
         this.urlConversionService = urlConversionService;
+        this.viewCountTackingService = viewCountTackingService;
     }
 
     @GetMapping("to-shortURL")
@@ -31,8 +34,9 @@ public class URLConversionController {
 
     @RequestMapping("/rl/{shortUrl}")
     public RedirectView redirectLongURL(@PathVariable("shortUrl") String shortUrl) {
+        System.out.println("param is " + shortUrl);
         String longUrl = urlConversionService.toLongUrl(shortUrl);
-        System.out.println("The long url about to redirect is " + longUrl);
+        viewCountTackingService.addViewCount(longUrl);
         RedirectView redirectView = new RedirectView();
         redirectView.setUrl(longUrl);
         return redirectView;

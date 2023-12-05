@@ -14,7 +14,7 @@ public abstract class BigTableAbstarctGateway {
     private final static String PROJECT_ID = "rice-comp-539-spring-2022";
     private final static String INSTANCE_ID = "rice-shared";
     private static BigtableDataSettings settings;
-    private static BigtableDataClient dataClient;
+    protected static BigtableDataClient dataClient;
 
     static{
         settings = BigtableDataSettings.newBuilder().setProjectId(PROJECT_ID).setInstanceId(INSTANCE_ID).build();
