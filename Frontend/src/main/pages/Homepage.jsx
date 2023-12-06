@@ -8,6 +8,7 @@ import { useNavigate } from "react-router-dom";
 import { useGlobalContext } from "../../context/GlobalContext";
 import LineChart from "../components/LineChart";
 
+export const baseBackendUrl = "https://linkpulse-backend-dot-rice-comp-539-spring-2022.uk.r.appspot.com"
 /** 
  * const chartData = {
     "dailyVisitCounts": [
@@ -74,7 +75,7 @@ const Homepage = ({longURL, setLongURL}) => {
     
     const fetchAnalyticsData = async () => {
         try {
-            const response = await fetch(`http://localhost:8080/analytic?url=${longURL}/&start=${aMonthAgo}/&end=${currentDate}`);
+            const response = await fetch(`${baseBackendUrl}/analytic?url=${longURL}/&start=${aMonthAgo}/&end=${currentDate}`);
             const data = await response.json();
             console.log(data);
             setAnalytic(data);
@@ -86,7 +87,7 @@ const Homepage = ({longURL, setLongURL}) => {
     
     useEffect(() => {
         if (longURL) {
-           fetch(`http://localhost:8080/to-shortURL?longURL=${longURL}`, {
+           fetch(`${baseBackendUrl}/to-shortURL?longURL=${longURL}`, {
              method: "get"
            })
              .then(response => {
@@ -114,7 +115,7 @@ const Homepage = ({longURL, setLongURL}) => {
 
     const handleCopyClick = async () => {
         console.log("copy")
-        await navigator.clipboard.writeText(`http://localhost:8080/rl/${shortURL}`);
+        await navigator.clipboard.writeText(`${baseBackendUrl}/rl/${shortURL}`);
     }
 
     const handleStatsClick = () => {
@@ -161,7 +162,7 @@ const Homepage = ({longURL, setLongURL}) => {
                 <div className="shortenResult">
                     <div className="up">
                         <div className="left">
-                            <a href={`http://localhost:8080/rl/${shortURL}`} target="_blank">{shortURL}</a>
+                            <a href={`${baseBackendUrl}/rl/${shortURL}`} target="_blank">{shortURL}</a>
                             &nbsp;&nbsp;
                             
                         </div>

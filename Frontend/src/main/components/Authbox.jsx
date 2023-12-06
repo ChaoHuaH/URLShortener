@@ -2,7 +2,9 @@ import axios from "axios";
 import React, { useState, useEffect } from "react";
 import { Link, useNavigate } from "react-router-dom"; 
 import { useGlobalContext } from "../../context/GlobalContext";
+import { baseBackendUrl } from "../pages/Homepage";
 import "../../styles/style.scss";
+
 const AuthBox = ({register}) => {
     const {loggedin, setLoggedin} = useGlobalContext();
 
@@ -31,7 +33,7 @@ const AuthBox = ({register}) => {
     
         try {
             const response = await axios.post(
-                register ? "http://localhost:8080/api/auth/register" : "http://localhost:8080/api/auth/login",
+                register ? `${baseBackendUrl}/api/auth/register` : `${baseBackendUrl}/api/auth/login`,
                 formData,
                 {
                     headers: {

@@ -2,6 +2,8 @@ import React from 'react'
 import { useState, useEffect } from 'react';
 import { FaRegCopy } from "react-icons/fa";
 
+const baseBackendUrl = "https://linkpulse-backend-dot-rice-comp-539-spring-2022.uk.r.appspot.com"
+
 const Customization = ({longURL, setLongURL}) => {
     let [customizeURL, setCustomizeURL] = useState("");
     let [changeTag, setChangeTag] = useState(true);
@@ -20,12 +22,12 @@ const Customization = ({longURL, setLongURL}) => {
 
     const handleCopyClick = async () => {
         console.log("copy")
-        await navigator.clipboard.writeText(`http://localhost:8080/rl/${customizeURL}`);
+        await navigator.clipboard.writeText(`${baseBackendUrl}/rl/${customizeURL}`);
     }
 
     useEffect(() => {
         if (longURL && customizeURL !== "") {
-           fetch(`http://localhost:8080/custom-shortURL?longURL=${longURL}&alias=${customizeURL}`, {
+           fetch(`${baseBackendUrl}/custom-shortURL?longURL=${longURL}&alias=${customizeURL}`, {
              method: "get"
            })
              .then(response => {
@@ -55,7 +57,7 @@ const Customization = ({longURL, setLongURL}) => {
         <div className="result_area">
             <div className="up">
                 <div className="left">
-                    Customized URL: &nbsp;<a href={`http://localhost:8080/rl/${customizeURL}`} target="_blank">{customizeURL}</a>
+                    Customized URL: &nbsp;<a href={`${baseBackendUrl}/rl/${customizeURL}`} target="_blank">{customizeURL}</a>
                     
                 </div>
                 <div className="right">
