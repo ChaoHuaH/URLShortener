@@ -3,6 +3,7 @@ package com.comp539.shorturl.controller;
 import com.comp539.shorturl.dto.ToShortURLResponse;
 import com.comp539.shorturl.service.URLConversionService;
 import com.comp539.shorturl.service.ViewCountTackingService;
+import com.comp539.shorturl.utils.Constants;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.ResponseEntity;
@@ -25,10 +26,8 @@ public class URLConversionController {
     @ResponseBody
     public ResponseEntity<ToShortURLResponse> toShortURL(String longURL){
         String shortUrl = urlConversionService.toShortUrl(longURL);
-        HttpHeaders responseHeaders = new HttpHeaders();
-        responseHeaders.set("Access-Control-Allow-Origin", "http://localhost:3000");
         return ResponseEntity.ok()
-                .headers(responseHeaders)
+                .headers(Constants.TEMPLATE_RESPONSE_HEADER)
                 .body(new ToShortURLResponse(shortUrl));
     }
 
@@ -46,16 +45,14 @@ public class URLConversionController {
     @ResponseBody
     public ResponseEntity<?> customShortURL(String longURL, String alias){
         boolean success = urlConversionService.createCustomShortUrl(longURL, alias);
-        HttpHeaders responseHeaders = new HttpHeaders();
-        responseHeaders.set("Access-Control-Allow-Origin", "http://localhost:3000");
         if(success){
             return ResponseEntity.ok()
-                    .headers(responseHeaders)
+                    .headers(Constants.TEMPLATE_RESPONSE_HEADER)
                     .body(new ToShortURLResponse(alias));
         }
         else{
             return ResponseEntity.badRequest()
-                    .headers(responseHeaders)
+                    .headers(Constants.TEMPLATE_RESPONSE_HEADER)
                     .body("Alias already in use. Please try another one.");
         }
     }

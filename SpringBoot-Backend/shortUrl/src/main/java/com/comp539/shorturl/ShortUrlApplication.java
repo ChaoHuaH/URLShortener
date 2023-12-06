@@ -2,12 +2,21 @@ package com.comp539.shorturl;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RestController;
 
 @SpringBootApplication
+@RestController
 public class ShortUrlApplication {
 
     public static void main(String[] args) {
         SpringApplication.run(ShortUrlApplication.class, args);
     }
+
+    @GetMapping("/")
+    public String hello() {
+        return "Hello world!";
+    }
+
 
 }

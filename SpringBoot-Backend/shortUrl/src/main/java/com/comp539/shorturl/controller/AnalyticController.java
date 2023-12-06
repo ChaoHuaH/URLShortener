@@ -4,6 +4,7 @@ import com.comp539.shorturl.dto.AnalyticResponse;
 import com.comp539.shorturl.dto.ToShortURLResponse;
 import com.comp539.shorturl.model.DailyVisitCount;
 import com.comp539.shorturl.service.ViewCountTackingService;
+import com.comp539.shorturl.utils.Constants;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -27,10 +28,8 @@ public class AnalyticController {
     public ResponseEntity<AnalyticResponse> getAnalyticViewCount(String url, String start, String end){
         List<DailyVisitCount> dailyVisitCounts = viewCountTackingService.getViewCounts(url, start, end);
         AnalyticResponse analyticResponse = new AnalyticResponse(dailyVisitCounts);
-        HttpHeaders responseHeaders = new HttpHeaders();
-        responseHeaders.set("Access-Control-Allow-Origin", "http://localhost:3000");
         return ResponseEntity.ok()
-                .headers(responseHeaders)
+                .headers(Constants.TEMPLATE_RESPONSE_HEADER)
                 .body(analyticResponse);
     }
 
